@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ParrafoDinamico</title>
+  <style>
+   .red {
+    color: red;
+	  font-size: 14px;
+
+   }
+  </style>
+</head>
+
+<body>
+  <h1>Párrafo dinámico</h1>
+  <p>Programa que va rellenando un párrafo de forma dinámica con todas las letras que va pulsando el usuario sobre cualquier 
+    elemento de la página. Al final del párrafo se incluye un botón para limpiar el contenido del párrafo.</p>
+
+  <main>
+    <h5 class="red">El párrafo dinámico se empezará a escribir cuando detecte el uso del teclado</h5>
+    <p id="dinamicP"></p>
+    <button id="deleteButton">Borrar contenido</button>
+    <hr>
+  </main>
+
+  <script>
+    let dinamicP = document.getElementById('dinamicP');
+    let deleteButton = document.getElementById('deleteButton');
+    deleteButton.addEventListener('click', () => {
+      dinamicP.textContent = '';
+    });
+
+    document.body.addEventListener('keydown', (event) => {
+      if (event.key === ' ') {
+        event.preventDefault(); // Prevenir el comportamiento por defecto del espacio para evitar scroll
+      }
+
+      if (dinamicP.childNodes.length === 0) {
+        // Crear el nodo de texto
+        let newTextNode = document.createTextNode(event.key === ' ' ? '\u00A0' : event.key);
+        dinamicP.appendChild(newTextNode);
+      } else {
+        // Añadir la tecla pulsada al contenido existente
+        dinamicP.childNodes[0].textContent += event.key === ' ' ? '\u00A0' : event.key;
+      }
+    });
+  </script>
+</body>
+
+</html>
